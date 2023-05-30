@@ -13,9 +13,6 @@ const emailSettings = {
     auth: {
         user: process.env.MAIL_USER,
         pass: process.env.MAIL_PASS
-    },
-    headers: {
-        'X-PM-Message-Stream': 'outbound'
     }
 };
 
@@ -38,7 +35,10 @@ const sendEmailAlert = async (price, deposit, reservationStatus) => {
             from: process.env.MAIL_FROM,
             to: process.env.MAIL_TO,
             subject: 'Citroen AMI restocked',
-            text: `The Citroen AMI with orange color option might be on sale again, better check the ordering page ASAP 👉 https://talep.citroen.com.tr/amionlinesiparis/form/turuncu\n\nThe car is priced at ${currencyFormatter.format(price)} and asked deposit amount is ${currencyFormatter.format(deposit)}. Currently, reservations are ${reservationStatus ? 'also open' : 'not open'}.`
+            text: `The Citroen AMI with orange color option might be on sale again, better check the ordering page ASAP 👉 https://talep.citroen.com.tr/amionlinesiparis/form/turuncu\n\nThe car is priced at ${currencyFormatter.format(price)} and asked deposit amount is ${currencyFormatter.format(deposit)}. Currently, reservations are ${reservationStatus ? 'also open' : 'not open'}.`,
+            headers: {
+                'X-PM-Message-Stream': 'outbound'
+            }
         });
         console.log(`${logDate()}\t:: Email alert sent successfully.`);
     } catch (error) {
