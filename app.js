@@ -46,6 +46,9 @@ const sendEmailAlert = async (price, deposit, reservationStatus) => {
     }
 };
 
+// Set a holder for stopping point indicator
+let retryCycle = 0;
+
 // Function to fetch the JSON response and check for changes
 const fetchDataAndCheckChanges = async () => {
     try {
@@ -62,6 +65,7 @@ const fetchDataAndCheckChanges = async () => {
         if (amiStock == true) {
             console.log(`${logDate()}\t:: Stock status has been updated!`);
             await sendEmailAlert(amiPrice, amiDeposit, amiReservation);
+            retryCycle++
         }
     } catch (error) {
         console.error('Error fetching data:', error);
@@ -72,4 +76,12 @@ const fetchDataAndCheckChanges = async () => {
 fetchDataAndCheckChanges();
 
 // Schedule a continuous run of the function for a defined interval. 
-setInterval(fetchDataAndCheckChanges, process.env.RETRY_FREQUENCY * 60 * 1000);
+const retryInterval = setInterval(() => {
+    if (retryCycle == process.env.RETRY_NOMORE) {
+        clearInterval(retryInterval);
+        console.log('Mission accomplished, terminating. Good luck!');
+        process.exitCode = 1;
+    } else {
+        fetchDataAndCheckChanges();
+    };
+}, process.env.RETRY_FREQUENCY * 60 * 1000);
