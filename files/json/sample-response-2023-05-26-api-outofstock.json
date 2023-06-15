@@ -1,0 +1,18 @@
+{
+    "carPrice": 259500,
+    "ccAmount": 20000,
+    "dealers": "{\"records\":[{\"record_id\":556,\"dealer_id\":556,\"dealer_name\":\"ABC - CITROEN\",\"dealer_short_name\":null,\"efespro_dealer_code\":\"01459\",\"rrdi_code\":\"CT1459T\",\"professional\":0,\"brand\":{\"value\":1,\"label\":\"CITROEN\"},\"city\":{\"value\":6415,\"label\":\"ANKARA\"},\"town\":{\"value\":67,\"label\":\"Yenimahalle\"},\"valet_service\":0,\"spoticar_point\":0,\"bank_information\":\"HALKBANK / ŞAŞMAZ ŞUBE:TR96 0000 0000 0000 0000 0000 00\\nİŞBANK / OSTİM TİCARİ:TR11 0000 0000 0000 0000 0000 00\\nGARANTİ / OSTİM TİCARİ:TR59 0000 0000 0000 0000 0000 00\",\"commercial_title\":\"ABC GRUP OTOMOBİLCİLİK FİLO KİRALAMA VE TURİZM TİCARET A.Ş.\",\"address\":\"İnönü Mahallesi Fatih Sultan Mehmet Bulvarı (İstanbul Yolu) No: 414 Ergazi YENİMAHALLE/ANKARA\",\"phone\":\"0312 278 38 38\",\"fax\":\"0312 278 15 14\",\"email\":\"mis.abc@citroenbayi.com\",\"mersisNo\":\"254000845600015\",\"fiscal_id\":null,\"iyciziKeyAvailable\":true,\"models\":[\"ami\",\"e-c4x\",\"e-c4\"]}],\"total\":612,\"success\":true}",
+    "cities": "{\"records\":[{\"record_id\":6941,\"city_name\":\"Serbest B\\u00f6lge\",\"active_peugeot_dealers\":0,\"active_citroen_dealers\":0,\"active_opel_dealers\":0,\"active_ds_dealers\":0,\"country\":{\"value\":242,\"label\":\"Serbest B\\u00f6lge\"},\"limited_model_master\":null}],\"total\":87,\"success\":true,\"statusCode\":200}",
+    "stock_available_color": [
+      {
+        "color": -1,
+        "available": false
+      }
+    ],
+    "reservation_available_color": [
+      {
+        "color": -1,
+        "available": false
+      }
+    ]
+  }

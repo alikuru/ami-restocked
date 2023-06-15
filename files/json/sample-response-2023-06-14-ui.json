@@ -1,0 +1,30 @@
+[
+  {
+    "id": 4,
+    "name": "turuncu",
+    "displayName": "Turuncu",
+    "imageUrl": "https://talep.citroen.com.tr/amionlinesiparis/images/car/ami/notrans/turuncu.png",
+    "carPrice": 0
+  },
+  {
+    "id": 2,
+    "name": "yesil",
+    "displayName": "Haki",
+    "imageUrl": "https://talep.citroen.com.tr/amionlinesiparis/images/car/ami/notrans/yesil.png",
+    "carPrice": 0
+  },
+  {
+    "id": 3,
+    "name": "gri",
+    "displayName": "Gri",
+    "imageUrl": "https://talep.citroen.com.tr/amionlinesiparis/images/car/ami/notrans/gri.png",
+    "carPrice": 0
+  },
+  {
+    "id": 1,
+    "name": "mavi",
+    "displayName": "Mavi",
+    "imageUrl": "https://talep.citroen.com.tr/amionlinesiparis/images/car/ami/notrans/mavi.png",
+    "carPrice": 0
+  }
+]
