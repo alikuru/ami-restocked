@@ -1,0 +1,92 @@
+{
+    "carPrice": 298000,
+    "ccAmount": 20000,
+    "dealers": [
+        {
+            "record_id": 556,
+            "dealer_id": 556,
+            "dealer_name": "ABC - CITROEN",
+            "displayName": "ABC",
+            "efespro_dealer_code": "01459",
+            "rrdi_code": "CT1459T",
+            "city": {
+                "value": 6415,
+                "label": "ANKARA"
+            },
+            "town": {
+                "value": 67,
+                "label": "Yenimahalle"
+            },
+            "bank_information": "HALKBANK / \u015EA\u015EMAZ \u015EUBE:TR00 0000 0000 0000 0000 0000 00\n\u0130\u015EBANK / OST\u0130M T\u0130CAR\u0130:TR00 0000 0000 0000 0000 0000 00\nGARANT\u0130 / OST\u0130M T\u0130CAR\u0130:TR500 0000 0000 0000 0000 0000 00",
+            "address": "\u0130n\u00F6n\u00FC Mahallesi Fatih Sultan Mehmet Bulvar\u0131 (\u0130stanbul Yolu) No: 414 Ergazi YEN\u0130MAHALLE/ANKARA",
+            "phone": "0312 278 38 38",
+            "fax": "0312 278 15 14",
+            "email": "mis.abc@citroenbayi.com",
+            "mersisNo": "254000845600015"
+        }
+    ],
+    "cities": [
+        {
+            "record_id": 6493,
+            "city_name": "D\u00DCZCE"
+        },
+        {
+            "record_id": 6492,
+            "city_name": "OSMAN\u0130YE"
+        }
+    ],
+    "stock_available_color": [
+        {
+            "color": -1,
+            "available": false
+        }
+    ],
+    "reservation_available_color": [
+        {
+            "color": 1,
+            "available": false
+        },
+        {
+            "color": 2,
+            "available": false
+        },
+        {
+            "color": -1,
+            "available": false
+        },
+        {
+            "color": 4,
+            "available": false
+        }
+    ],
+    "colors": [
+        {
+            "id": 4,
+            "name": "turuncu",
+            "displayName": "Turuncu",
+            "imageUrl": "https://talep.citroen.com.tr/amionlinesiparis/images/car/ami/notrans/turuncu.png",
+            "carPrice": 0
+        },
+        {
+            "id": 2,
+            "name": "yesil",
+            "displayName": "Haki",
+            "imageUrl": "https://talep.citroen.com.tr/amionlinesiparis/images/car/ami/notrans/yesil.png",
+            "carPrice": 0
+        },
+        {
+            "id": 3,
+            "name": "gri",
+            "displayName": "Gri",
+            "imageUrl": "https://talep.citroen.com.tr/amionlinesiparis/images/car/ami/notrans/gri.png",
+            "carPrice": 0
+        },
+        {
+            "id": 1,
+            "name": "mavi",
+            "displayName": "Mavi",
+            "imageUrl": "https://talep.citroen.com.tr/amionlinesiparis/images/car/ami/notrans/mavi.png",
+            "carPrice": 0
+        }
+    ]
+}
