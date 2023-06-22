@@ -29,15 +29,15 @@ const currencyFormatter = new Intl.NumberFormat('en-US', {
 const transporter = nodemailer.createTransport(emailSettings);
 
 // Function to send an email alert
-const sendEmailAlert = async (price, deposit, reservationStatus, color, slug, colorStock, colorReservation, tableHTML, tableText) => {
+const sendEmailAlert = async (price, deposit, reservationStatus, colorOptionsStatus, color, slug, colorStock, colorReservation, tableHTML, tableText) => {
 
     try {
         await transporter.sendMail({
             from: process.env.MAIL_FROM,
             to: process.env.MAIL_TO,
             subject: 'Citroen AMI restocked',
-            html: `The Citroen AMI is in stock again! ${colorStock ? `Even ${color} color option might be on sale` : 'Your favorite color is not available right now but you might want to consider other options'}, better check the ordering page ASAP ⚡ https://talep.citroen.com.tr/amionlinesiparis/form/${slug}<br/><br/>The car is priced at ${currencyFormatter.format(price)} and asked deposit amount is ${currencyFormatter.format(deposit)}. Currently, reservations are ${reservationStatus ? `also open${colorReservation ? ' for the color you seek 🎉' : ' but not for the color you seek 😔'}` : 'not open'}.<br/><br/>Here is a summary of what's available at the moment 👇<br/><br/>${tableHTML}`,
-            text: `The Citroen AMI is in stock again! ${colorStock ? `Even ${color} color option might be on sale` : 'Your favorite color is not available right now but you might want to consider other options'}, better check the ordering page ASAP ⚡ https://talep.citroen.com.tr/amionlinesiparis/form/${slug}\n\nThe car is priced at ${currencyFormatter.format(price)} and asked deposit amount is ${currencyFormatter.format(deposit)}. Currently, reservations are ${reservationStatus ? `also open${colorReservation ? ' for the color you seek 🎉' : ' but not for the color you seek 😔'}` : 'not open'}.\n\nHere is a summary of what's available at the moment 👇\n${tableText}`,
+            html: `The Citroen AMI ${colorOptionsStatus.length <= 1 ? `might become available very soon` : `is in stock again`}! ${colorStock ? `Even ${color} color option might be on sale` : 'Your favorite color is not available right now but you might want to consider other options'}, better ${colorOptionsStatus.length <= 1 ? `start checking the ordering page` : `check the ordering page ASAP`} ⚡ https://talep.citroen.com.tr/amionlinesiparis/form/${slug}<br/><br/>The car is priced at ${currencyFormatter.format(price)} and asked deposit amount is ${currencyFormatter.format(deposit)}. Currently, reservations are ${reservationStatus ? `also open${colorReservation ? ' for the color you seek 🎉' : ' but not for the color you seek 😔'}` : 'not open'}.${colorOptionsStatus.length <= 1 ? `` : `<br/><br/>Here is a summary of what's available at the moment 👇<br/><br/>${tableHTML}`}`,
+            text: `The Citroen AMI ${colorOptionsStatus.length <= 1 ? `might become available very soon` : `is in stock again`}! ${colorStock ? `Even ${color} color option might be on sale` : 'Your favorite color is not available right now but you might want to consider other options'}, better ${colorOptionsStatus.length <= 1 ? `start checking the ordering page` : `check the ordering page ASAP`} ⚡ https://talep.citroen.com.tr/amionlinesiparis/form/${slug}\n\nThe car is priced at ${currencyFormatter.format(price)} and asked deposit amount is ${currencyFormatter.format(deposit)}. Currently, reservations are ${reservationStatus ? `also open${colorReservation ? ' for the color you seek 🎉' : ' but not for the color you seek 😔'}` : 'not open'}.${colorOptionsStatus.length <= 1 ? `` : `\n\nHere is a summary of what's available at the moment 👇\n${tableText}`}`,
             headers: {
                 'X-PM-Message-Stream': 'outbound'
             }
@@ -165,16 +165,23 @@ const fetchDataAndCheckChanges = async () => {
                         amiRowColorTranslator();
                         const amiRowStock = element.available;
                         const amiRowReservation = amiColorsReservation[amiColorsReservation.findIndex(item => item['color'] == element.color)].available;
-                        const amiRowPrice = currencyFormatter.format(amiColors[amiColors.findIndex(item => item['id'] == element.color)].carPrice);
+                        const amiRowPrice = () => {
+                            const amiColorSpecificPrice = amiColors[amiColors.findIndex(item => item['id'] == element.color)].carPrice;
+                            if (amiColorSpecificPrice <= 0) {
+                                return currencyFormatter.format(amiPrice);
+                            } else {
+                                return currencyFormatter.format(amiColorSpecificPrice);
+                            }
+                        };
 
-                        rowsText += `| ${amiRowColor.padEnd(10)}| ${(amiRowStock ? 'In stock' : 'Out of stock').padEnd(15)}| ${(amiRowReservation ? 'Yes' : 'No').padEnd(15)}| ${amiRowPrice.padEnd(16)}|\n`;
+                        rowsText += `| ${amiRowColor.padEnd(10)}| ${(amiRowStock ? 'In stock' : 'Out of stock').padEnd(15)}| ${(amiRowReservation ? 'Yes' : 'No').padEnd(15)}| ${amiRowPrice().padEnd(16)}|\n`;
 
-                        rowsHTML += `<tr style=\"height: 21px;\">\r\n<td style=\"overflow: hidden; padding: 2px 3px; vertical-align: bottom; border: 1px solid rgb(204, 204, 204);\">${amiRowColor}<\/td>\r\n<td style=\"overflow: hidden; padding: 2px 3px; vertical-align: bottom; border: 1px solid rgb(204, 204, 204);\">${amiRowStock ? 'In stock' : 'Out of stock'}<\/td>\r\n<td style=\"overflow: hidden; padding: 2px 3px; vertical-align: bottom; border: 1px solid rgb(204, 204, 204);\">${amiRowReservation ? 'Yes' : 'No'}<\/td>\r\n<td style=\"overflow: hidden; padding: 2px 3px; vertical-align: bottom; border: 1px solid rgb(204, 204, 204);\">${amiRowPrice}<\/td>\r\n<\/tr>\r\n`;
+                        rowsHTML += `<tr style=\"height: 21px;\">\r\n<td style=\"overflow: hidden; padding: 2px 3px; vertical-align: bottom; border: 1px solid rgb(204, 204, 204);\">${amiRowColor}<\/td>\r\n<td style=\"overflow: hidden; padding: 2px 3px; vertical-align: bottom; border: 1px solid rgb(204, 204, 204);\">${amiRowStock ? 'In stock' : 'Out of stock'}<\/td>\r\n<td style=\"overflow: hidden; padding: 2px 3px; vertical-align: bottom; border: 1px solid rgb(204, 204, 204);\">${amiRowReservation ? 'Yes' : 'No'}<\/td>\r\n<td style=\"overflow: hidden; padding: 2px 3px; vertical-align: bottom; border: 1px solid rgb(204, 204, 204);\">${amiRowPrice()}<\/td>\r\n<\/tr>\r\n`;
                     }
                 }
 
                 const tableRows = {
-                    html: rowsHTML ,
+                    html: rowsHTML,
                     text: rowsText
                 }
 
@@ -199,7 +206,7 @@ const fetchDataAndCheckChanges = async () => {
         // Check if the stock status has changed
         if (amiGeneralStock == true) {
             console.log(`${logDate()}\t:: Stock status has been updated!`);
-            await sendEmailAlert(amiPrice, amiDeposit, amiGeneralReservation, amiColor, amiSlug, amiPrefferredStock, amiPrefferredReservation, amiListAllOptions().html, amiListAllOptions().text);
+            await sendEmailAlert(amiPrice, amiDeposit, amiGeneralReservation, amiColorsAvailability, amiColor, amiSlug, amiPrefferredStock, amiPrefferredReservation, amiListAllOptions().html, amiListAllOptions().text);
             retryCycle++
         }
     } catch (error) {
