@@ -55,19 +55,20 @@ let retryCycle = 0;
 const fetchDataAndCheckChanges = async () => {
     try {
         const response = await axios.get(apiUrl);
+        const { carPrice: amiPrice, ccAmount: amiDeposit, colors: amiColors, stock_available_color: amiColorsAvailability, reservation_available_color: amiColorsReservation } = response.data;
         const amiTarget = () => {
-            const amiStockIndex = response.data.stock_available_color.findIndex(item => item['color'] == process.env.AMI_COLOR);
-            const amiReservationIndex = response.data.reservation_available_color.findIndex(item => item['color'] == process.env.AMI_COLOR);
+            const amiStockIndex = amiColorsAvailability.findIndex(item => item['color'] == process.env.AMI_COLOR);
+            const amiReservationIndex = amiColorsReservation.findIndex(item => item['color'] == process.env.AMI_COLOR);
             const getAmiStockStatus = () => {
                 if (amiStockIndex != -1) {
-                    return response.data.stock_available_color[amiStockIndex].available;
+                    return amiColorsAvailability[amiStockIndex].available;
                 } else {
                     return false;
                 }
             };
             const getAmiReservationStatus = () => {
                 if (amiStockIndex != -1) {
-                    return response.data.reservation_available_color[amiReservationIndex].available;
+                    return amiColorsReservation[amiReservationIndex].available;
                 } else {
                     return false;
                 }
@@ -116,25 +117,17 @@ const fetchDataAndCheckChanges = async () => {
             }
 
             const amiChoice = {
-                amiColor: setAmiColor(process.env.AMI_COLOR),
-                amiSlug: setAmiSlug(process.env.AMI_COLOR),
-                amiStock: getAmiStockStatus(),
-                amiReservation: getAmiReservationStatus()
+                amiPrefferredColor: setAmiColor(process.env.AMI_COLOR),
+                amiPrefferredSlug: setAmiSlug(process.env.AMI_COLOR),
+                amiPrefferredStock: getAmiStockStatus(),
+                amiPrefferredReservation: getAmiReservationStatus()
             };
 
             return amiChoice;
         }
-        const amiColor = amiTarget().amiColor;
-        const amiSlug = amiTarget().amiSlug;
-        const amiGeneralStock = response.data.stock_available_color[response.data.stock_available_color.findIndex(item => item['color'] == -1)].available;
-        const amiGeneralReservation = response.data.reservation_available_color[response.data.reservation_available_color.findIndex(item => item['color'] == -1)].available;
-        const amiPrefferredStock = amiTarget().amiStock;
-        const amiPrefferredReservation = amiTarget().amiReservation;
-        const amiPrice = response.data.carPrice;
-        const amiDeposit = response.data.ccAmount;
-        const amiColors = response.data.colors;
-        const amiColorsAvailability = response.data.stock_available_color;
-        const amiColorsReservation = response.data.reservation_available_color;
+        const { amiPrefferredColor, amiPrefferredSlug, amiPrefferredStock, amiPrefferredReservation } = amiTarget();
+        const amiGeneralStock = amiColorsAvailability[amiColorsAvailability.findIndex(item => item['color'] == -1)].available;
+        const amiGeneralReservation = amiColorsReservation[amiColorsReservation.findIndex(item => item['color'] == -1)].available;
 
         const amiListAllOptions = () => {
             const loop = () => {
@@ -206,7 +199,7 @@ const fetchDataAndCheckChanges = async () => {
         // Check if the stock status has changed
         if (amiGeneralStock == true) {
             console.log(`${logDate()}\t:: Stock status has been updated!`);
-            await sendEmailAlert(amiPrice, amiDeposit, amiGeneralReservation, amiColorsAvailability, amiColor, amiSlug, amiPrefferredStock, amiPrefferredReservation, amiListAllOptions().html, amiListAllOptions().text);
+            await sendEmailAlert(amiPrice, amiDeposit, amiGeneralReservation, amiColorsAvailability, amiPrefferredColor, amiPrefferredSlug, amiPrefferredStock, amiPrefferredReservation, amiListAllOptions().html, amiListAllOptions().text);
             retryCycle++
         }
     } catch (error) {

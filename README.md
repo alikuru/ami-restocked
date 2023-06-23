@@ -29,7 +29,7 @@ npm install
 
 Before using the script, you need to set up the environment variables in the `.env` file. Please see `.env.example` for details.
 
-To run the script, use the following command. You might want to use a terminal multiplexer like [screen](https://en.wikipedia.org/wiki/GNU_Screen) or [tmux](https://github.com/tmux/tmux/wiki) for leaving the app running in the background. There is also [PM2](https://github.com/Unitech/pm2) but it might be an overkill for script like this.
+To run the script, use the following command. You might want to use a terminal multiplexer like [screen](https://en.wikipedia.org/wiki/GNU_Screen) or [tmux](https://github.com/tmux/tmux/wiki) for leaving the app running in the background. There is also [PM2](https://github.com/Unitech/pm2) but it might be an overkill for a script like this.
 
 ```
 node app.js
