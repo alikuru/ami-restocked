@@ -47,4 +47,4 @@ Please note that this script started off with a ChatGPT prompt, which I refactor
 
 ## License
 
-is script is MIT licensed. See the LICENSE file for more details.
+is script is MIT licensed. See the [LICENSE](LICENSE) file for details.
